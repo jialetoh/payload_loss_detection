@@ -204,14 +204,15 @@ cython_debug/
 # Claude Code local configuration files
 .claude/settings.local.json
 .claude/
+.claude
 *.local.md
 .mcp.local.json
+.modalignore
 
 # Marimo
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-
 
 # macOS
 .DS_Store
