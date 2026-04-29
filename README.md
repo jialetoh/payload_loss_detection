@@ -11,7 +11,7 @@ Three approaches were evaluated:
 
 1. **Structural Similarity Index (SSIM)**
 2. **YOLO26n Object Detection**
-3. **Custom Siamese Network** (final chosen method)
+3. **Custom Siamese Network** (selected as the final method)
 
 The final comparison was conducted on a test dataset of 144 videos.
 
@@ -39,13 +39,14 @@ payload_loss_detection/
 │   │   ├── videos_loss/
 │   │   ├── videos_normal/
 │   │   ├── extracted_pairs/
-│   │   └── train_labels.csv
-│   ├── 01_prepare_pairs.ipynb
+│   │   │   └── train_labels.csv
+│   │   └── ground_truth.csv
+│   ├── 01_extract_pairs.ipynb
 │   ├── 02_train_siamese.ipynb
-│   └── siamese_model.py
+│   ├── siamese_model.py
+│   └── siamese_utils.py
 │
 ├── src/
-│   ├── base_method.py
 │   ├── ssim_method.py
 │   ├── yolo_method.py
 │   ├── siamese_method.py
@@ -56,13 +57,12 @@ payload_loss_detection/
 ├── notebooks/
 │   ├── 01_test_ssim.ipynb
 │   ├── 02_test_yolo.ipynb
-│   ├── 03_test_siamese.ipynb
-│   └── 04_compare_all_methods.ipynb
+│   └── 03_test_siamese.ipynb
 │
 ├── weights/
 │   ├── siamese_best.pth
 │   └── yolo26n.pt
-│
+│   
 └── deployment/
 ```
 
@@ -80,7 +80,7 @@ It contains the following fields:
 
 | Field | Description |
 |---|---|
-| `filename` | Name of the video file |
+| `filename` | Relative path to the video file |
 | `camera_id` | Camera view: front, back, left, or right |
 | `is_loss_event` | `0` for normal operation, `1` for payload loss |
 | `loss_frame` | Frame where payload loss occurs, or `-1` if no loss occurs |
@@ -97,6 +97,7 @@ Training data includes:
 - 32 normal operation videos
 
 Normal-operation frame pairs can also be sampled from payload loss videos, as long as both frames are taken either before or after the loss event (no need to record so many normal-operation videos).
+
 
 ## Usage
 
